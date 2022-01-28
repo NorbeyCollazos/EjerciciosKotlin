@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Apps Android Studio 2022/EJERCICIOS_KOTLIN/EjerciciosVarios/app/src/main/res/drawable/splashscreen.xml" value="0.2203125" />
+        <entry key="..\:/Apps Android Studio 2022/EJERCICIOS_KOTLIN/EjerciciosVarios/app/src/main/res/layout/activity_splash_screen.xml" value="0.20416666666666666" />
         <entry key="..\:/Apps Android Studio 2022/EJERCICIOS_KOTLIN/EjerciciosVarios/app/src/main/res/layout/activity_web_view.xml" value="0.22" />
       </map>
     </option>
