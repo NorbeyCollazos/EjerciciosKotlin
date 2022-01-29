@@ -15,25 +15,34 @@ class SharedPreferencesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_shared_preferences)
 
         //obtenemos el PreferenceManager
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        //val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        val pref = SharedPref(this)
 
         btnGuardarPreferencias.setOnClickListener{
-            val editor = prefs.edit()
+            /*val editor = prefs.edit()
             editor.putString(key, "Hola")
-            editor.apply()
+            editor.apply()*/
+
+            pref.guardarString(key, "Hola que tal")
         }
 
         btnMostrarPreferencias.setOnClickListener {
-            val myPref = prefs.getString(key, "No hay valor")
+            /*val myPref = prefs.getString(key, "No hay valor")
             if (myPref != null) {
                 showAlert(myPref)
-            }
+            }*/
+
+            val valor = pref.obtenerString(key)
+            showAlert(valor)
         }
 
         btnEliminarPreferencias.setOnClickListener {
-            val editor = prefs.edit()
+            /*val editor = prefs.edit()
             editor.remove(key)
-            editor.apply()
+            editor.apply()*/
+
+            pref.eliminarString(key)
         }
     }
 
