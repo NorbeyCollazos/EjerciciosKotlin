@@ -1,5 +1,6 @@
 package com.ncrdesarrollo.ejerciciosvarios
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
@@ -9,5 +10,7 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.Theme_EjerciciosVarios)//se debe colocar para que tome el theme principal
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
     }
 }
