@@ -18,4 +18,13 @@
         <item name="android:windowBackground">@drawable/splashscreen</item>
     </style>
 
+    <style name="DatePickerTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">#FFA726</item>
+    </style>
+
+    <style name="PickerTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">#FFA726</item>
+    </style>
+
+
 </resources>

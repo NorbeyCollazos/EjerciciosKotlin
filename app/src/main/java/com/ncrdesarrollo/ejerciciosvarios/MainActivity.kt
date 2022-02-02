@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val CAMERA_REQUEST_CODE = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Thread.sleep(2000) //esto sirve para retardar
@@ -30,63 +30,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        btnPermisosCamera.setOnClickListener {
-            chekCameraPermission()
+        etSelectorFecha.setOnClickListener {
+            showDatePikerDialog()
+        }
+
+        etSelectorHora.setOnClickListener {
+            showTimePickerDialog()
         }
     }
 
-    private fun chekCameraPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            //El permiso no esta aceptado
-            requestCameraPermission()
-        }else{
-            //se acepto el permiso
-            //aqui ya se puede abrir la camara
-            abrirCamara()
-        }
+    //funciones para el DatePiker
+    private fun showDatePikerDialog() {
+        val datepiker = DatePikerFragment { day, month, year -> onDateSelected(day, month, year) }
+        datepiker.show(supportFragmentManager, "datePiker")
     }
 
-    private fun abrirCamara() {
-        Toast.makeText(this, "Abriendo camara", Toast.LENGTH_SHORT).show()
+    private fun onDateSelected(day:Int, month:Int, year:Int){
+        etSelectorFecha.setText("$day/$month/$year")
     }
 
-    private fun requestCameraPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.CAMERA)) {
-            //El usuario ya ha rechazado el permiso anteriormente, debemos informarle que vaya a ajustes.
-            Toast.makeText(this, "Rechazaste los permisos, ve a austes y activlos manualmente", Toast.LENGTH_SHORT).show()
-        } else {
-            //El usuario nunca ha aceptado ni rechazado, así que le pedimos que acepte el permiso.
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.CAMERA),
-                CAMERA_REQUEST_CODE)
-        }
+
+
+    //funciones para el TimePiker
+    private fun showTimePickerDialog() {
+        val timePicker = TimePikerFragment { onTimeSelected(it) }
+        timePicker.show(supportFragmentManager, "timePicker")
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            CAMERA_REQUEST_CODE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    //El usuario ha aceptado el permiso, no tiene porqué darle de nuevo al botón, podemos lanzar
-                // la funcionalidad desde aquí.
-                    abrirCamara()
-
-                } else {
-                    //El usuario ha rechazado el permiso, podemos desactivar la funcionalidad o mostrar una vista/diálogo.
-                    Toast.makeText(this, "Se rechazó el permiso", Toast.LENGTH_SHORT).show()
-                }
-                return
-            }
-            else -> {
-                // Este else lo dejamos por si sale un permiso que no teníamos controlado.
-            }
-        }
-
+    private fun onTimeSelected(time: String) {
+        etSelectorHora.setText("$time")
     }
+
 
 }
