@@ -1,22 +1,23 @@
 package com.ncrdesarrollo.ejerciciosvarios
 
-import android.Manifest
-import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 import com.ncrdesarrollo.ejerciciosvarios.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: ActivityMainBinding
 
 
+    private lateinit var map: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Thread.sleep(2000) //esto sirve para retardar
@@ -25,41 +26,29 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initUI()
+        createMapFragment()
 
     }
 
-    private fun initUI() {
-        etSelectorFecha.setOnClickListener {
-            showDatePikerDialog()
-        }
-
-        etSelectorHora.setOnClickListener {
-            showTimePickerDialog()
-        }
+    private fun createMapFragment() {
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.fragmentMap) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
-    //funciones para el DatePiker
-    private fun showDatePikerDialog() {
-        val datepiker = DatePikerFragment { day, month, year -> onDateSelected(day, month, year) }
-        datepiker.show(supportFragmentManager, "datePiker")
+    override fun onMapReady(googleMap: GoogleMap?) {
+        map = googleMap!!
+        createMarker()
     }
 
-    private fun onDateSelected(day:Int, month:Int, year:Int){
-        etSelectorFecha.setText("$day/$month/$year")
+    private fun createMarker() {
+        val favoritePlace = LatLng(2.1368324036299957, -75.64284847817689)
+        map.addMarker(MarkerOptions().position(favoritePlace).title("El balcón del Huila"))
+        map.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(favoritePlace, 18f),
+            2000,
+            null
+        )
     }
-
-
-
-    //funciones para el TimePiker
-    private fun showTimePickerDialog() {
-        val timePicker = TimePikerFragment { onTimeSelected(it) }
-        timePicker.show(supportFragmentManager, "timePicker")
-    }
-
-    private fun onTimeSelected(time: String) {
-        etSelectorHora.setText("$time")
-    }
-
 
 }
